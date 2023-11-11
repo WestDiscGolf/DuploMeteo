@@ -6,6 +6,7 @@ using DataAccess.Services;
 using Domain.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +35,11 @@ var app = builder.Build();
 //Since this is just a backend, we may as well at least have a simple swagger ui display
 //even in non-development mode.
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 
