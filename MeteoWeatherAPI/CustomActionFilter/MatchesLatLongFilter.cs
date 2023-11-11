@@ -30,7 +30,7 @@ namespace MeteoWeatherAPI.CustomActionFilter
             if(string.IsNullOrEmpty(latitude) || string.IsNullOrEmpty(longitude))
             {
                 context.HttpContext.Response.StatusCode = 400;
-                context.Result = new ObjectResult(new {
+                context.Result = new BadRequestObjectResult(new {
                     FailureReason = "Latitude and Longitude must be provided"
                 });
 
@@ -43,7 +43,7 @@ namespace MeteoWeatherAPI.CustomActionFilter
             if(!regexMatchLatitude || !regexMatchLongtitude)
             {
                 context.HttpContext.Response.StatusCode = 400;
-                context.Result = new ObjectResult(new {
+                context.Result = new BadRequestObjectResult(new {
                     FailureReason = "Latitude and Longtitude must be in the correct format"
                 });
 
