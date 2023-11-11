@@ -27,6 +27,7 @@ namespace Application.Dto
 
         [JsonProperty("hourly")]
         public HourlyDto Hourly { get; set; }
+        public DateTime TimeLastUpdatedUtc { get; set; }
 
         public WeatherForecast ToAggregate()
         {

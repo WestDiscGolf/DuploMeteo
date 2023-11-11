@@ -17,7 +17,7 @@ namespace Application.Service
     {
         Task<WeatherForecastDto> SaveWeatherForecastAync(string latitude, string longitude);
         Task<WeatherForecastDto> GetWeatherForecastAsync(string latitude, string longitude);
-        Task<IEnumerable<PreviousLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync();
+        Task<IEnumerable<BasicLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync();
         Task DeleteWeatherForecastAsync(string latitude, string longitude);
     }
 
@@ -48,10 +48,10 @@ namespace Application.Service
             .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<PreviousLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync()
+        public async Task<IEnumerable<BasicLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync()
         {
             var result = await weatherDomainService.GetPreviousLatLongsAsync().ConfigureAwait(false);
-            var dtos = result.Select(x => new PreviousLatLongDto
+            var dtos = result.Select(x => new BasicLatLongDto
             {
                 Latitude = x.Latitude,
                 Longitude = x.Longitude
@@ -73,6 +73,11 @@ namespace Application.Service
             var key = LatLongKey.Key(latitude, longitude);
             var result = await weatherDomainService.GetWeatherForecastAsync(key).ConfigureAwait(false);
             
+            if(result == null)
+            {
+                return null;
+            }
+
             return result.ToDto();
         }
 

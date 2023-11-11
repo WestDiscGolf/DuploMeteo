@@ -6,6 +6,7 @@ using DataAccess.Services;
 using Domain.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MeteoWeatherAPI.CustomActionFilter;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
@@ -14,7 +15,7 @@ var config = builder.Configuration;
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(mvcOptions => { mvcOptions.Filters.Add<MatchesLatLongFilter>(); });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

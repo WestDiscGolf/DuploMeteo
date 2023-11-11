@@ -24,17 +24,5 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ToHTsg3eChI2oSyTEpNuWwDOT8woSljN
       MONGO_INITDB_DATABASE: MeteoWeatherForecast
 
-  mongoexpress:
-    image: mongo-express
-    restart: always
-    links:
-      - mongoMeteo
-    depends_on:
-      - mongoMeteo
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ToHTsg3eChI2oSyTEpNuWwDOT8woSljN
-      ME_CONFIG_MONGODB_URL: mongodb://root:ToHTsg3eChI2oSyTEpNuWwDOT8woSljN@mongometeo:27017/
-
 volumes:
   mongodb_data_volume:

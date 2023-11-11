@@ -6,17 +6,6 @@ using System.Threading.Tasks;
 
 namespace Application.Dto
 {
-    public class PreviousLatLongDto : BasicLatLongDto
-    {
-        public string LatLongCombined
-        {
-            get
-            {
-                return $"{Latitude}{Longitude}";
-            }
-        }
-    }
-
     public class BasicLatLongDto
     {
         public string Latitude { get; set; }

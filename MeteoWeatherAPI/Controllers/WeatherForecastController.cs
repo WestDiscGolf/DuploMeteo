@@ -1,6 +1,7 @@
 using Application.Dto;
 using Application.Service;
 using Domain;
+using MeteoWeatherAPI.CustomAttribute;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -28,6 +29,7 @@ namespace MeteoWeatherAPI.Controllers
         }
 
         [HttpGet("{latitude}/{longitude}")]
+        [MatchesLatLong]
         public async Task<WeatherForecastDto> GetWeatherForecast([BindRequired] string latitude, [BindRequired] string longitude)
         {
             var forecast = await _weatherService.GetWeatherForecastAsync(latitude, longitude).ConfigureAwait(false);
@@ -35,13 +37,14 @@ namespace MeteoWeatherAPI.Controllers
         }
 
         [HttpGet("past-forecasts")]
-        public async Task<IEnumerable<PreviousLatLongDto>> GetPastForecasts()
+        public async Task<IEnumerable<BasicLatLongDto>> GetPastForecasts()
         {
             var pastForecasts = await _weatherService.GetPastHistoricLatitudesAndLongitudesAsync().ConfigureAwait(false);
             return pastForecasts;
         }
 
         [HttpDelete("{latitude}/{longitude}")]
+        [MatchesLatLong]
         public async Task DeleteWeatherForecast([BindRequired] string latitude, [BindRequired] string longitude)
         {
             await _weatherService.DeleteWeatherForecastAsync(latitude, longitude).ConfigureAwait(false);

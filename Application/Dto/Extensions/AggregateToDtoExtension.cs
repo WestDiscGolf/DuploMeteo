@@ -13,6 +13,7 @@ namespace Application.Dto.Extensions
         {
             return new WeatherForecastDto()
             {
+                TimeLastUpdatedUtc = weatherForecast.TimeLastUpdatedUtc,
                 Latitude = weatherForecast.Latitude,
                 Longitude = weatherForecast.Longitude,
                 Id = weatherForecast.Id,
