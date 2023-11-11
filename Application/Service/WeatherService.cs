@@ -103,7 +103,9 @@ namespace Application.Service
                 parsed.Id = LatLongKey.Key(latitude, longitude);
 
                 //Overriding returned lat/long as they slightly differ from what was passed in when API returns
-                //This causes the cache to always miss on second rerun.
+                //the data and probably does some small adjustments internally to the provided coordinates.
+                //This causes the cache key to not be found if we don't set the lat/long of our parsed object to what
+                //the user supplied.
                 parsed.Longitude = longitude;
                 parsed.Latitude = latitude;
 
