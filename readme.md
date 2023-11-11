@@ -28,7 +28,12 @@ appropriate locale as they know what `Timezone` was used when the dates were mad
 
 I've purposefully implemented an action filter which will run for any endpoint which has the `MatchesLatLongAttribute`. The rationale behind this being
 that our Lat/Long is sufficiently unique and idempotent that it acts as our primary key for our data later down the chain. The POST endpoint has a fluent validator
-set up which ensures that we do pass in valid data when saving. However, assigning a fluent validator to a basic GET/DELETE endpoint which just accepts route parameters
+set up which ensures that we do pass in valid data when saving. 
+
+However, assigning a fluent validator to a basic GET/DELETE endpoint which just accepts route parameters
 is a hassle, at least from what I gather. As such, the attribute comes into play. In order to reduce load on the system, and properly convey to the user if they have passed 
 data in a malformed fashion, we will throw a 400 with an object explaining what went wrong. This is explicitly to prevent the system from having to try to read/delete from
-the cache/db when we know there will be nothing to do as the provided parameters were incorrect.
+the cache/db when we know there will be nothing to do as the provided parameters were incorrect. 
+
+No test cases were written for this as the logic is very much 1 : 1 as to what the
+fluent validator does, so testing this would be duplicating test cases. 
