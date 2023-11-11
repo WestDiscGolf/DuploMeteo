@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Dto
 {
-    public class WeatherForeCastDto
+    public class WeatherForecastDto
     {
         public string Id { get; set; }
         [JsonProperty("latitude")]

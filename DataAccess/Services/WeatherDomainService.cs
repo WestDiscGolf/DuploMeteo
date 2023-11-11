@@ -53,14 +53,14 @@ namespace DataAccess.Services
             {
                 IsUpsert = true
             }).ContinueWith(async x =>
+            {
+                var key = LatLongKey.Key(weatherForecast.Latitude, weatherForecast.Longitude);
+                var historicLatLong = new HistoricLatLong { Id = key, Latitude = weatherForecast.Latitude, Longitude = weatherForecast.Longitude };
+                await _context.HistoricLatLongs.ReplaceOneAsync(historicAggregate => historicAggregate.Id == key, historicLatLong, new ReplaceOptions
                 {
-                    var key = LatLongKey.Key(weatherForecast.Latitude, weatherForecast.Longitude);
-                    var historicLatLong = new HistoricLatLong { Id = key, Latitude = weatherForecast.Latitude, Longitude = weatherForecast.Longitude };
-                    await _context.HistoricLatLongs.ReplaceOneAsync(historicAggregate => historicAggregate.Id == key, historicLatLong, new ReplaceOptions
-                    {
-                        IsUpsert = true
-                    }).ConfigureAwait(false);
-                }, TaskContinuationOptions.RunContinuationsAsynchronously).ConfigureAwait(false);
+                    IsUpsert = true
+                }).ConfigureAwait(false);
+            }, TaskContinuationOptions.RunContinuationsAsynchronously).ConfigureAwait(false);
         }
     }
 }

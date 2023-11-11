@@ -11,8 +11,8 @@ namespace Application.Cache
 {
     public interface IWeatherCacheService
     {
-        void SaveForecast(WeatherForeCastDto dto);
-        WeatherForeCastDto GetForeCastDto(CacheKey cacheKey);
+        void SaveForecast(WeatherForecastDto dto);
+        WeatherForecastDto GetForecastDto(CacheKey cacheKey);
 
         void DeleteForecast(CacheKey key);
     }
@@ -33,15 +33,15 @@ namespace Application.Cache
                 _memoryCache.Remove(key.GetCacheKey());
         }
 
-        public WeatherForeCastDto GetForeCastDto(CacheKey cacheKey)
+        public WeatherForecastDto GetForecastDto(CacheKey cacheKey)
         {
             var key = cacheKey.GetCacheKey();
 
-            var result = _memoryCache.Get<WeatherForeCastDto>(key);
+            var result = _memoryCache.Get<WeatherForecastDto>(key);
             return result;
         }
 
-        public void SaveForecast(WeatherForeCastDto dto)
+        public void SaveForecast(WeatherForecastDto dto)
         {
             var key = new CacheKey(dto.Latitude, dto.Longitude).GetCacheKey();
             _memoryCache.Set(key, dto, new MemoryCacheEntryOptions()

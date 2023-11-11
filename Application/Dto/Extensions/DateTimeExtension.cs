@@ -20,6 +20,9 @@ namespace Application.Dto.Extensions
         /// <returns></returns>
         public static List<DateTime> ConvertStringTimesUsingTimezone(this IEnumerable<string> times, string timezone)
         {
+            if(times == null)
+                return new List<DateTime>();
+
             var tz = TimeZoneInfo.FindSystemTimeZoneById(timezone);
             var convertedTimes = times.Select(x =>
             {

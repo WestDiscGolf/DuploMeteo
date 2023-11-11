@@ -21,14 +21,14 @@ namespace MeteoWeatherAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<WeatherForeCastDto> SaveWeatherForecast([BindRequired] BasicLatLongDto dto)
+        public async Task<WeatherForecastDto> SaveWeatherForecast([BindRequired] BasicLatLongDto dto)
         {
             var forecast = await _weatherService.SaveWeatherForecastAync(dto.Latitude, dto.Longitude).ConfigureAwait(false);
             return forecast;
         }
 
         [HttpGet("{latitude}/{longitude}")]
-        public async Task<WeatherForecast> GetWeatherForecast([BindRequired] string latitude, [BindRequired] string longitude)
+        public async Task<WeatherForecastDto> GetWeatherForecast([BindRequired] string latitude, [BindRequired] string longitude)
         {
             var forecast = await _weatherService.GetWeatherForecastAsync(latitude, longitude).ConfigureAwait(false);
             return forecast;
@@ -44,7 +44,7 @@ namespace MeteoWeatherAPI.Controllers
         [HttpDelete("{latitude}/{longitude}")]
         public async Task DeleteWeatherForecast([BindRequired] string latitude, [BindRequired] string longitude)
         {
-            //await _weatherService.DeleteWeatherForecastAsync(weatherId).ConfigureAwait(false);
+            await _weatherService.DeleteWeatherForecastAsync(latitude, longitude).ConfigureAwait(false);
             return;
         }
     }

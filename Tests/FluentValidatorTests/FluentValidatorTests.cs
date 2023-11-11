@@ -39,13 +39,53 @@ namespace Tests.FluentValidatorTests
         {
             var validModel = new BasicLatLongDto()
             {
-                Latitude = "90",
+                Latitude = "91",
                 Longitude = "-84.2941"
             };
 
             var result = validator.TestValidate(validModel);
             result.ShouldHaveValidationErrorFor(x => x.Latitude);
-            //Assert.IsFalse(result.IsValid);
+            Assert.IsFalse(result.IsValid);
+        }
+
+        [TestMethod]
+        public void Given_AltitudeIsInvalidFormat_FluentValidationFails()
+        {
+            var validModel = new BasicLatLongDto()
+            {
+                Latitude = "34.0754",
+                Longitude = "-181"
+            };
+
+            var result = validator.TestValidate(validModel);
+            result.ShouldHaveValidationErrorFor(x => x.Longitude);
+            Assert.IsFalse(result.IsValid);
+        }
+
+        [TestMethod]
+        public void Given_LatitudeIsMissing_FluentValidationFails()
+        {
+            var validModel = new BasicLatLongDto()
+            {
+                Longitude = "-84.2941"
+            };
+
+            var result = validator.TestValidate(validModel);
+            result.ShouldHaveValidationErrorFor(x => x.Latitude);
+            Assert.IsFalse(result.IsValid);
+        }
+
+        [TestMethod]
+        public void Given_LongitudeIsMissing_FluentValidationFails()
+        {
+            var validModel = new BasicLatLongDto()
+            {
+                Latitude = "34",
+            };
+
+            var result = validator.TestValidate(validModel);
+            result.ShouldHaveValidationErrorFor(x => x.Longitude);
+            Assert.IsFalse(result.IsValid);
         }
     }
 }
