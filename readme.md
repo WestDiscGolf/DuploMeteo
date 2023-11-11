@@ -7,7 +7,7 @@ This project is designed with docker in mind, namely with respect to how we conn
 
 - In the root directory, run `docker compose -f docker-compose.yml up`
 - You may either run the project via VS, or run `dotnet run` in the MetoWeatherApi directory. 
-- - If running via `dotnet run`, navigate to the url specified. In my case, `localhost:5000`
+- - If running via `dotnet run`, navigate to the url specified. In my case, `localhost:5080`
 - Enjoy
 
 # Considerations and Rationale Behind Code Choices
