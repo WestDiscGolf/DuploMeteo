@@ -38,7 +38,7 @@ namespace MeteoWeatherAPI.CustomActionFilter
             }
 
             var regexMatchLatitude = Regex.IsMatch(latitude, LatLongRegex.LATITUDE_REGEX);
-            var regexMatchLongtitude = Regex.IsMatch(longitude, LatLongRegex.LATITUDE_REGEX);
+            var regexMatchLongtitude = Regex.IsMatch(longitude, LatLongRegex.LONGITUDE_REGEX);
 
             if(!regexMatchLatitude || !regexMatchLongtitude)
             {
