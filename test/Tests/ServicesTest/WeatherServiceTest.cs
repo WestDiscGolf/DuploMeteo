@@ -6,11 +6,6 @@ using Domain.Keys;
 using Domain.Services;
 using Moq;
 using Moq.AutoMock;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.ServicesTest
 {

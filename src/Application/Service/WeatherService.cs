@@ -1,15 +1,9 @@
 ﻿using Application.Cache;
 using Application.Dto;
 using Application.Dto.Extensions;
-using Domain;
 using Domain.Keys;
 using Domain.Services;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Service
 {

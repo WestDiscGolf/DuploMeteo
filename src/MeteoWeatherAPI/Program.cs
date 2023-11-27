@@ -7,7 +7,6 @@ using Domain.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MeteoWeatherAPI.CustomActionFilter;
-using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
