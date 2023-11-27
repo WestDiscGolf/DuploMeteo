@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0128CF37-8937-4F7B-8C52-2FFA9E4A46A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A7508D3B-6EC3-4C70-A06A-3E7997B894FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeteoWeatherAPI", "src\MeteoWeatherAPI\MeteoWeatherAPI.csproj", "{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "test\Tests\Tests.csproj", "{4E291232-4FFB-42A8-9057-81B133EE6B59}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E291232-4FFB-42A8-9057-81B133EE6B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E291232-4FFB-42A8-9057-81B133EE6B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E291232-4FFB-42A8-9057-81B133EE6B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E291232-4FFB-42A8-9057-81B133EE6B59}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72A7E2D1-3BFD-4E3F-BF0D-9B01B0D06666} = {0128CF37-8937-4F7B-8C52-2FFA9E4A46A9}
+		{4E291232-4FFB-42A8-9057-81B133EE6B59} = {A7508D3B-6EC3-4C70-A06A-3E7997B894FA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3543D942-89D8-4CA3-880E-D60E4834158B}
+	EndGlobalSection
+EndGlobal
