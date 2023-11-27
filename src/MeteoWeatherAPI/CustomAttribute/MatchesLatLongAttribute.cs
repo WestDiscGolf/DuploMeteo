@@ -1,7 +1,6 @@
-﻿namespace MeteoWeatherAPI.CustomAttribute
+﻿namespace MeteoWeatherAPI.CustomAttribute;
+
+[AttributeUsage(AttributeTargets.Method)]
+public class MatchesLatLongAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public class MatchesLatLongAttribute : Attribute
-    {
-    }
 }

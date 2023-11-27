@@ -1,39 +1,38 @@
 ﻿using Domain;
 
-namespace Application.Dto.Extensions
+namespace Application.Dto.Extensions;
+
+public static class AggregateToDtoExtension
 {
-    public static class AggregateToDtoExtension
+    public static WeatherForecastDto ToDto(this WeatherForecast weatherForecast)
     {
-        public static WeatherForecastDto ToDto(this WeatherForecast weatherForecast)
+        return new WeatherForecastDto()
         {
-            return new WeatherForecastDto()
-            {
-                TimeLastUpdatedUtc = weatherForecast.TimeLastUpdatedUtc,
-                Latitude = weatherForecast.Latitude,
-                Longitude = weatherForecast.Longitude,
-                Id = weatherForecast.Id,
-                Timezone =  weatherForecast.Timezone,
-                Hourly = weatherForecast.Hourly.ToDto(),
-                HourlyUnits = weatherForecast.HourlyUnits.ToDto()
-            };
-        }
+            TimeLastUpdatedUtc = weatherForecast.TimeLastUpdatedUtc,
+            Latitude = weatherForecast.Latitude,
+            Longitude = weatherForecast.Longitude,
+            Id = weatherForecast.Id,
+            Timezone =  weatherForecast.Timezone,
+            Hourly = weatherForecast.Hourly.ToDto(),
+            HourlyUnits = weatherForecast.HourlyUnits.ToDto()
+        };
+    }
 
-        public static HourlyDto ToDto(this Hourly hourly)
+    public static HourlyDto ToDto(this Hourly hourly)
+    {
+        return new HourlyDto()
         {
-            return new HourlyDto()
-            {
-                Temperatures = hourly.Temperatures,
-                Times = hourly.Times.Select(x => x.ToString("O"))
-            };
-        }
+            Temperatures = hourly.Temperatures,
+            Times = hourly.Times.Select(x => x.ToString("O"))
+        };
+    }
 
-        public static HourlyUnitsDto ToDto(this HourlyUnits hourlyUnits)
+    public static HourlyUnitsDto ToDto(this HourlyUnits hourlyUnits)
+    {
+        return new HourlyUnitsDto()
         {
-            return new HourlyUnitsDto()
-            {
-                Temperature =  hourlyUnits.Temperature,
-                Time = hourlyUnits.Time
-            };
-        }
+            Temperature =  hourlyUnits.Temperature,
+            Time = hourlyUnits.Time
+        };
     }
 }

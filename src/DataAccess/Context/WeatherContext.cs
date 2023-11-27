@@ -1,22 +1,21 @@
 ﻿using Domain;
 using MongoDB.Driver;
 
-namespace DataAccess.Context
+namespace DataAccess.Context;
+
+public class WeatherContext
 {
-    public class WeatherContext
+    private readonly string DATABASE_NAME = "MeteoWeatherForecast";
+    private readonly string WEATHER_COLLECTION_NAME = "WeatherForecast";
+    private readonly string PREVIOUSLY_QUERIED_LATLONG_COLLECTION_NAME = "HistoricLatLongs";
+
+    private readonly IMongoDatabase _dataBase;
+
+    public WeatherContext(IMongoClient client)
     {
-        private readonly string DATABASE_NAME = "MeteoWeatherForecast";
-        private readonly string WEATHER_COLLECTION_NAME = "WeatherForecast";
-        private readonly string PREVIOUSLY_QUERIED_LATLONG_COLLECTION_NAME = "HistoricLatLongs";
-
-        private readonly IMongoDatabase _dataBase;
-
-        public WeatherContext(IMongoClient client)
-        {
-            _dataBase = client.GetDatabase(DATABASE_NAME);
-        }
-
-        public IMongoCollection<WeatherForecast> WeatherForecastContext => _dataBase.GetCollection<WeatherForecast>(WEATHER_COLLECTION_NAME);
-        public IMongoCollection<HistoricLatLong> HistoricLatLongs => _dataBase.GetCollection<HistoricLatLong>(PREVIOUSLY_QUERIED_LATLONG_COLLECTION_NAME);
+        _dataBase = client.GetDatabase(DATABASE_NAME);
     }
+
+    public IMongoCollection<WeatherForecast> WeatherForecastContext => _dataBase.GetCollection<WeatherForecast>(WEATHER_COLLECTION_NAME);
+    public IMongoCollection<HistoricLatLong> HistoricLatLongs => _dataBase.GetCollection<HistoricLatLong>(PREVIOUSLY_QUERIED_LATLONG_COLLECTION_NAME);
 }

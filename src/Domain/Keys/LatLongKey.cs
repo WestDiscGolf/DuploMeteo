@@ -1,7 +1,6 @@
-﻿namespace Domain.Keys
+﻿namespace Domain.Keys;
+
+public static class LatLongKey
 {
-    public static class LatLongKey
-    {
-        public static string Key(string latitude, string longitude) => $"Latitude#{latitude}_Longitude#{longitude}";
-    }
+    public static string Key(string latitude, string longitude) => $"Latitude#{latitude}_Longitude#{longitude}";
 }

@@ -5,73 +5,72 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Moq.AutoMock;
 
-namespace Tests.ServicesTest
+namespace Tests.ServicesTest;
+
+[TestClass]
+public class WeatherCacheTest
 {
-    [TestClass]
-    public class WeatherCacheTest
+    private AutoMocker autoMocker = new AutoMocker();
+    private IWeatherCacheService mocked_weatherCacheService;
+    private IWeatherCacheService concrete_weatherCacheService;
+
+    private const string LATITUDE = "34.0754";
+    private const string LONGITUDE = "-84.2941";
+
+    //Because many of the methods on IMemoryCache are extension methods, and you cannot use
+    //extension methods in the .Setup of an autoMocker, we have to use an actual concrete implementation.
+    public WeatherCacheTest()
     {
-        private AutoMocker autoMocker = new AutoMocker();
-        private IWeatherCacheService mocked_weatherCacheService;
-        private IWeatherCacheService concrete_weatherCacheService;
+        var services = new ServiceCollection();
+        services.AddMemoryCache();
+        var serviceProvider = services.BuildServiceProvider();
 
-        private const string LATITUDE = "34.0754";
-        private const string LONGITUDE = "-84.2941";
+        var memoryCache = serviceProvider.GetService<IMemoryCache>();
+        concrete_weatherCacheService = new WeatherCacheService(memoryCache);
+    }
 
-        //Because many of the methods on IMemoryCache are extension methods, and you cannot use
-        //extension methods in the .Setup of an autoMocker, we have to use an actual concrete implementation.
-        public WeatherCacheTest()
+    [TestInitialize]
+    public void Init()
+    {
+        mocked_weatherCacheService = autoMocker.CreateInstance<WeatherCacheService>();
+    }
+
+    [TestMethod]
+    public void Given_KeyDoesNotExistInCache_NoRemovalOccurs()
+    {
+        var key = new CacheKey(LATITUDE, LONGITUDE);
+
+        mocked_weatherCacheService.DeleteForecast(key);
+
+        autoMocker.GetMock<IMemoryCache>()
+            .Verify(x => x.Remove(key.GetCacheKey()), Times.Never());
+    }
+
+    [TestMethod]
+    public void Given_WeatherForecastDto_SaveSuccessfullyToCache()
+    {
+        var dto = new WeatherForecastDto()
         {
-            var services = new ServiceCollection();
-            services.AddMemoryCache();
-            var serviceProvider = services.BuildServiceProvider();
+            Latitude = LATITUDE, Longitude = LONGITUDE
+        };
 
-            var memoryCache = serviceProvider.GetService<IMemoryCache>();
-            concrete_weatherCacheService = new WeatherCacheService(memoryCache);
-        }
+        concrete_weatherCacheService.SaveForecast(dto);
 
-        [TestInitialize]
-        public void Init()
-        {
-            mocked_weatherCacheService = autoMocker.CreateInstance<WeatherCacheService>();
-        }
+        var key = new CacheKey(LATITUDE, LONGITUDE);
 
-        [TestMethod]
-        public void Given_KeyDoesNotExistInCache_NoRemovalOccurs()
-        {
-            var key = new CacheKey(LATITUDE, LONGITUDE);
+        var fromCache = concrete_weatherCacheService.GetForecastDto(key);
 
-            mocked_weatherCacheService.DeleteForecast(key);
+        Assert.IsTrue(fromCache != null);
+        Assert.IsTrue(fromCache.Latitude == dto.Latitude && fromCache.Longitude == dto.Longitude);
+    }
 
-            autoMocker.GetMock<IMemoryCache>()
-                .Verify(x => x.Remove(key.GetCacheKey()), Times.Never());
-        }
+    [TestMethod]
+    public void Given_WeatherForecastDto_DoesNotExistInCache_ReturnsNull()
+    {
+        var key = new CacheKey("blah", "blah");
 
-        [TestMethod]
-        public void Given_WeatherForecastDto_SaveSuccessfullyToCache()
-        {
-            var dto = new WeatherForecastDto()
-            {
-                Latitude = LATITUDE, Longitude = LONGITUDE
-            };
+        var result = concrete_weatherCacheService.GetForecastDto(key);
 
-            concrete_weatherCacheService.SaveForecast(dto);
-
-            var key = new CacheKey(LATITUDE, LONGITUDE);
-
-            var fromCache = concrete_weatherCacheService.GetForecastDto(key);
-
-            Assert.IsTrue(fromCache != null);
-            Assert.IsTrue(fromCache.Latitude == dto.Latitude && fromCache.Longitude == dto.Longitude);
-        }
-
-        [TestMethod]
-        public void Given_WeatherForecastDto_DoesNotExistInCache_ReturnsNull()
-        {
-            var key = new CacheKey("blah", "blah");
-
-            var result = concrete_weatherCacheService.GetForecastDto(key);
-
-            Assert.IsTrue(result == null);
-        }
+        Assert.IsTrue(result == null);
     }
 }

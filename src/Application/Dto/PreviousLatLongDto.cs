@@ -1,8 +1,7 @@
-﻿namespace Application.Dto
+﻿namespace Application.Dto;
+
+public class BasicLatLongDto
 {
-    public class BasicLatLongDto
-    {
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
-    }
+    public string Latitude { get; set; }
+    public string Longitude { get; set; }
 }

@@ -1,23 +1,22 @@
 ﻿using Domain;
 using Newtonsoft.Json;
 
-namespace Application.Dto
+namespace Application.Dto;
+
+public class HourlyUnitsDto
 {
-    public class HourlyUnitsDto
+    [JsonProperty("time")]
+    public string Time { get; set; }
+
+    [JsonProperty("temperature_2m")]
+    public string Temperature { get; set; }
+
+    public HourlyUnits ToAggregate()
     {
-        [JsonProperty("time")]
-        public string Time { get; set; }
-
-        [JsonProperty("temperature_2m")]
-        public string Temperature { get; set; }
-
-        public HourlyUnits ToAggregate()
+        return new HourlyUnits
         {
-            return new HourlyUnits
-            {
-                Temperature = Temperature,
-                Time = Time
-            };
-        }
+            Temperature = Temperature,
+            Time = Time
+        };
     }
 }

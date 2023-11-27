@@ -1,11 +1,10 @@
-﻿namespace Domain.Services
+﻿namespace Domain.Services;
+
+public interface IWeatherDomainService
 {
-    public interface IWeatherDomainService
-    {
-        Task SaveWeatherForecastAsync(WeatherForecast weatherForecast);
-        Task<WeatherForecast> GetWeatherForecastAsync(string id);
-        Task<IEnumerable<WeatherForecast>> GetPastWeatherForecastsAsync();
-        Task<IEnumerable<HistoricLatLong>> GetPreviousLatLongsAsync();
-        Task DeleteWeatherForecastAsync(string weatherId);
-    }
+    Task SaveWeatherForecastAsync(WeatherForecast weatherForecast);
+    Task<WeatherForecast> GetWeatherForecastAsync(string id);
+    Task<IEnumerable<WeatherForecast>> GetPastWeatherForecastsAsync();
+    Task<IEnumerable<HistoricLatLong>> GetPreviousLatLongsAsync();
+    Task DeleteWeatherForecastAsync(string weatherId);
 }
