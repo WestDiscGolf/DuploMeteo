@@ -17,3 +17,4 @@ obj/
 */wwwroot/ts/**/*.js
 */wwwroot/_references.js
 /MeteoWeatherAPI.sln.DotSettings.user
+/src/MeteoWeatherAPI/MeteoWeatherAPI.csproj.user
