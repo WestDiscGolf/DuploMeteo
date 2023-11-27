@@ -1,6 +1,6 @@
-﻿using Application.Dto;
-using Application.Validators;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
+using MeteoWeatherAPI.Dto;
+using MeteoWeatherAPI.Validators;
 
 namespace Tests.FluentValidatorTests;
 

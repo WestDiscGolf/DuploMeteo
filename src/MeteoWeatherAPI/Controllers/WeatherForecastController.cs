@@ -1,5 +1,5 @@
-using Application.Dto;
 using MeteoWeatherAPI.CustomActionFilter;
+using MeteoWeatherAPI.Dto;
 using MeteoWeatherAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
