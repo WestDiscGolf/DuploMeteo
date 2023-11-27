@@ -19,7 +19,7 @@ builder.Services.AddControllers(mvcOptions => { mvcOptions.Filters.Add<MatchesLa
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IMongoClient>(s => new MongoClient(config.GetConnectionString("MongoCtx")));
-builder.Services.AddScoped(s => new WeatherContext(s.GetRequiredService<IMongoClient>()));
+builder.Services.AddScoped(s => new WeatherDbContext(s.GetRequiredService<IMongoClient>()));
 
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IWeatherDomainService, WeatherDomainService>();

@@ -8,34 +8,34 @@ namespace DataAccess.Services;
 
 public class WeatherDomainService : IWeatherDomainService
 {
-    private readonly WeatherContext _context;
+    private readonly WeatherDbContext _dbContext;
 
-    public WeatherDomainService(WeatherContext context)
+    public WeatherDomainService(WeatherDbContext dbContext)
     {
-        _context = context;
+        _dbContext = dbContext;
     }
 
     public async Task DeleteWeatherForecastAsync(string weatherId)
     {
         var filter = new FilterDefinitionBuilder<WeatherForecast>().Eq(x => x.Id, weatherId);
-        await _context.WeatherForecastContext.DeleteOneAsync(filter).ConfigureAwait(false);
+        await _dbContext.WeatherForecastContext.DeleteOneAsync(filter).ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<WeatherForecast>> GetPastWeatherForecastsAsync()
     {
-        var result = await _context.WeatherForecastContext.Find(Builders<WeatherForecast>.Filter.Empty).ToListAsync();
+        var result = await _dbContext.WeatherForecastContext.Find(Builders<WeatherForecast>.Filter.Empty).ToListAsync();
         return result;
     }
 
     public async Task<IEnumerable<HistoricLatLong>> GetPreviousLatLongsAsync()
     {            
-        var result = await _context.HistoricLatLongs.Find(Builders<HistoricLatLong>.Filter.Empty).ToListAsync();
+        var result = await _dbContext.HistoricLatLongs.Find(Builders<HistoricLatLong>.Filter.Empty).ToListAsync();
         return result;
     }
 
     public async Task<WeatherForecast> GetWeatherForecastAsync(string id)
     {
-        var result = await _context.WeatherForecastContext.Find(x => x.Id == id)
+        var result = await _dbContext.WeatherForecastContext.Find(x => x.Id == id)
             .SingleOrDefaultAsync()
             .ConfigureAwait(false);
 
@@ -44,14 +44,14 @@ public class WeatherDomainService : IWeatherDomainService
 
     public async Task SaveWeatherForecastAsync(WeatherForecast weatherForecast)
     {
-        await _context.WeatherForecastContext.ReplaceOneAsync(weatherForecastAggregate => weatherForecastAggregate.Id == weatherForecast.Id, weatherForecast, new ReplaceOptions
+        await _dbContext.WeatherForecastContext.ReplaceOneAsync(weatherForecastAggregate => weatherForecastAggregate.Id == weatherForecast.Id, weatherForecast, new ReplaceOptions
         {
             IsUpsert = true
         }).ContinueWith(async x =>
         {
             var key = LatLongKey.Key(weatherForecast.Latitude, weatherForecast.Longitude);
             var historicLatLong = new HistoricLatLong { Id = key, Latitude = weatherForecast.Latitude, Longitude = weatherForecast.Longitude };
-            await _context.HistoricLatLongs.ReplaceOneAsync(historicAggregate => historicAggregate.Id == key, historicLatLong, new ReplaceOptions
+            await _dbContext.HistoricLatLongs.ReplaceOneAsync(historicAggregate => historicAggregate.Id == key, historicLatLong, new ReplaceOptions
             {
                 IsUpsert = true
             }).ConfigureAwait(false);

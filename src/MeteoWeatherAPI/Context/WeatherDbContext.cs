@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace DataAccess.Context;
 
-public class WeatherContext
+public class WeatherDbContext
 {
     private readonly string DATABASE_NAME = "MeteoWeatherForecast";
     private readonly string WEATHER_COLLECTION_NAME = "WeatherForecast";
@@ -11,7 +11,7 @@ public class WeatherContext
 
     private readonly IMongoDatabase _dataBase;
 
-    public WeatherContext(IMongoClient client)
+    public WeatherDbContext(IMongoClient client)
     {
         _dataBase = client.GetDatabase(DATABASE_NAME);
     }
