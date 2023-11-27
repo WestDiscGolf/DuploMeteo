@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using MeteoWeatherAPI.Dto;
 using Newtonsoft.Json;
 
 namespace Application.Dto;

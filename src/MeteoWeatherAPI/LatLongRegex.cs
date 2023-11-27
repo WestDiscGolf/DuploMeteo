@@ -1,4 +1,4 @@
-﻿namespace Application.Constants;
+﻿namespace MeteoWeatherAPI;
 
 public static class LatLongRegex
 {

@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using MeteoWeatherAPI.Dto;
 using MongoDB.Driver;
 
 namespace DataAccess.Context;

@@ -1,5 +1,5 @@
-﻿using Application.Cache;
-using Application.Dto;
+﻿using Application.Dto;
+using MeteoWeatherAPI.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;

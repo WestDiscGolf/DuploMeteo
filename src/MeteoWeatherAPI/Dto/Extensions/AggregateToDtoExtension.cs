@@ -1,4 +1,4 @@
-﻿using Domain;
+﻿using MeteoWeatherAPI.Dto;
 
 namespace Application.Dto.Extensions;
 

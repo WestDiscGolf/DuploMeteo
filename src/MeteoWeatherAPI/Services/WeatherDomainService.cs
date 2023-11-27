@@ -1,7 +1,6 @@
 ﻿using DataAccess.Context;
-using Domain;
-using Domain.Keys;
 using Domain.Services;
+using MeteoWeatherAPI.Dto;
 using MongoDB.Driver;
 
 namespace DataAccess.Services;

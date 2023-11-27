@@ -1,6 +1,6 @@
-﻿using Domain.Keys;
+﻿using MeteoWeatherAPI.Dto;
 
-namespace Application.Cache;
+namespace MeteoWeatherAPI.Services;
 
 public class CacheKey
 {
@@ -9,7 +9,8 @@ public class CacheKey
         Latitude = latitude;
         Longitude = longitude;
 
-        if (string.IsNullOrEmpty(latitude) || string.IsNullOrEmpty(longitude)) {
+        if (string.IsNullOrEmpty(latitude) || string.IsNullOrEmpty(longitude))
+        {
             throw new ApplicationException("Latitude, Longitude are required when creating a cache key");
         }
     }

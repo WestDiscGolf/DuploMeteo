@@ -1,7 +1,7 @@
 ﻿using Application.Dto;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Application.Cache;
+namespace MeteoWeatherAPI.Services;
 
 public interface IWeatherCacheService
 {
@@ -23,7 +23,7 @@ public class WeatherCacheService : IWeatherCacheService
     {
         var cacheKey = key.GetCacheKey();
 
-        if(_memoryCache.TryGetValue(cacheKey, out _))
+        if (_memoryCache.TryGetValue(cacheKey, out _))
             _memoryCache.Remove(key.GetCacheKey());
     }
 

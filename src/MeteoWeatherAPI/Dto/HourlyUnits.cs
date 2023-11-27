@@ -1,4 +1,4 @@
-﻿namespace Domain;
+﻿namespace MeteoWeatherAPI.Dto;
 
 public class HourlyUnits
 {

@@ -1,4 +1,4 @@
-﻿namespace Domain.Keys;
+﻿namespace MeteoWeatherAPI.Dto;
 
 public static class LatLongKey
 {

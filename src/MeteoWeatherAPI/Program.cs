@@ -1,4 +1,3 @@
-using Application.Cache;
 using Application.Validators;
 using DataAccess.Context;
 using DataAccess.Services;

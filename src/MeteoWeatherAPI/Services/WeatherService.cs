@@ -1,8 +1,7 @@
-﻿using Application.Cache;
-using Application.Dto;
+﻿using Application.Dto;
 using Application.Dto.Extensions;
-using Domain.Keys;
 using Domain.Services;
+using MeteoWeatherAPI.Dto;
 using Newtonsoft.Json;
 
 namespace MeteoWeatherAPI.Services;

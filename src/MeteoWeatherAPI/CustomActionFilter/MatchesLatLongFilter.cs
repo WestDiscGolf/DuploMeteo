@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MeteoWeatherAPI.CustomAttribute;
 using System.Text.RegularExpressions;
-using Application.Constants;
 
 namespace MeteoWeatherAPI.CustomActionFilter;
 

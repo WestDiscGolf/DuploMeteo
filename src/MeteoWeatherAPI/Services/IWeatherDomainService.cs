@@ -1,4 +1,6 @@
-﻿namespace Domain.Services;
+﻿using MeteoWeatherAPI.Dto;
+
+namespace Domain.Services;
 
 public interface IWeatherDomainService
 {
