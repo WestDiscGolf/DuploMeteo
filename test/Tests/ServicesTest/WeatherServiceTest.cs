@@ -1,5 +1,4 @@
 ﻿using Application.Dto;
-using Domain.Services;
 using MeteoWeatherAPI.Dto;
 using MeteoWeatherAPI.Services;
 using Moq;

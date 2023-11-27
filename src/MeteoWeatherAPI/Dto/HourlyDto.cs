@@ -1,7 +1,6 @@
-﻿using MeteoWeatherAPI.Dto;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
-namespace Application.Dto;
+namespace MeteoWeatherAPI.Dto;
 
 public class HourlyDto
 {

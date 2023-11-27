@@ -1,9 +1,8 @@
-﻿using Domain.Services;
-using MeteoWeatherAPI.Data;
+﻿using MeteoWeatherAPI.Data;
 using MeteoWeatherAPI.Dto;
 using MongoDB.Driver;
 
-namespace DataAccess.Services;
+namespace MeteoWeatherAPI.Services;
 
 public class WeatherDomainService : IWeatherDomainService
 {

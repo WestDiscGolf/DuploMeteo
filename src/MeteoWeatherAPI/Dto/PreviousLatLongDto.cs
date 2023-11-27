@@ -1,4 +1,4 @@
-﻿namespace Application.Dto;
+﻿namespace MeteoWeatherAPI.Dto;
 
 public class BasicLatLongDto
 {

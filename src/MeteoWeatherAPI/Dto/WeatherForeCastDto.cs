@@ -1,8 +1,7 @@
 ﻿using Application.Dto.Extensions;
-using MeteoWeatherAPI.Dto;
 using Newtonsoft.Json;
 
-namespace Application.Dto;
+namespace MeteoWeatherAPI.Dto;
 
 public class WeatherForecastDto
 {

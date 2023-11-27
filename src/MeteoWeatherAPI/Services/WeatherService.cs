@@ -1,6 +1,4 @@
-﻿using Application.Dto;
-using Application.Dto.Extensions;
-using Domain.Services;
+﻿using Application.Dto.Extensions;
 using MeteoWeatherAPI.Dto;
 using Newtonsoft.Json;
 

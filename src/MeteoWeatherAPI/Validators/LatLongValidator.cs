@@ -1,8 +1,7 @@
-﻿using Application.Dto;
-using FluentValidation;
-using MeteoWeatherAPI;
+﻿using FluentValidation;
+using MeteoWeatherAPI.Dto;
 
-namespace Application.Validators;
+namespace MeteoWeatherAPI.Validators;
 
 public class LatLongValidator : AbstractValidator<BasicLatLongDto>
 {

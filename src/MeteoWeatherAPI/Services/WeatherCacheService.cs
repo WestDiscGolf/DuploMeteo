@@ -1,4 +1,4 @@
-﻿using Application.Dto;
+﻿using MeteoWeatherAPI.Dto;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace MeteoWeatherAPI.Services;
@@ -43,6 +43,5 @@ public class WeatherCacheService : IWeatherCacheService
             //Reasonable cache for weather data
             SlidingExpiration = TimeSpan.FromMinutes(30)
         });
-
     }
 }
