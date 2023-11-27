@@ -1,53 +1,43 @@
-﻿using Application.Dto.Extensions;
-using MeteoWeatherAPI.Dto;
+﻿using MeteoWeatherAPI.Dto;
 using Newtonsoft.Json;
 
 namespace MeteoWeatherAPI.Services;
 
-public interface IWeatherService
-{
-    Task<WeatherForecastDto> SaveWeatherForecastAync(string latitude, string longitude);
-    Task<WeatherForecastDto> GetWeatherForecastAsync(string latitude, string longitude);
-    Task<IEnumerable<BasicLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync();
-    Task DeleteWeatherForecastAsync(string latitude, string longitude);
-}
-
 public class WeatherService : IWeatherService
 {
-    private readonly IWeatherCacheService weatherCacheService;
-    private readonly IWeatherDomainService weatherDomainService;
+    private readonly IWeatherCacheService _weatherCacheService;
+    private readonly IWeatherDomainService _weatherDomainService;
 
     public WeatherService(IWeatherCacheService weatherCacheService, IWeatherDomainService weatherDomainService)
     {
-        this.weatherCacheService = weatherCacheService;
-        this.weatherDomainService = weatherDomainService;
+        _weatherCacheService = weatherCacheService;
+        _weatherDomainService = weatherDomainService;
     }
     public async Task DeleteWeatherForecastAsync(string latitude, string longitude)
     {
         var id = LatLongKey.Key(latitude, longitude);
-        var toDelete = await weatherDomainService.GetWeatherForecastAsync(id).ConfigureAwait(false);
+        var toDelete = await _weatherDomainService.GetWeatherForecastAsync(id).ConfigureAwait(false);
 
         if (toDelete == null)
             return;
 
         var cacheKey = new CacheKey(toDelete.Latitude, toDelete.Longitude);
 
-        await weatherDomainService.DeleteWeatherForecastAsync(id).ContinueWith(x =>
+        await _weatherDomainService.DeleteWeatherForecastAsync(id).ContinueWith(x =>
             {
-                weatherCacheService.DeleteForecast(cacheKey);
+                _weatherCacheService.DeleteForecast(cacheKey);
             }, TaskContinuationOptions.ExecuteSynchronously)
             .ConfigureAwait(false);
     }
 
     public async Task<IEnumerable<BasicLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync()
     {
-        var result = await weatherDomainService.GetPreviousLatLongsAsync().ConfigureAwait(false);
+        var result = await _weatherDomainService.GetPreviousLatLongsAsync().ConfigureAwait(false);
         var dtos = result.Select(x => new BasicLatLongDto
         {
             Latitude = x.Latitude,
             Longitude = x.Longitude
         });
-
 
         return dtos;
     }
@@ -62,7 +52,7 @@ public class WeatherService : IWeatherService
         }
 
         var key = LatLongKey.Key(latitude, longitude);
-        var result = await weatherDomainService.GetWeatherForecastAsync(key).ConfigureAwait(false);
+        var result = await _weatherDomainService.GetWeatherForecastAsync(key).ConfigureAwait(false);
 
         if (result == null)
         {
@@ -112,15 +102,15 @@ public class WeatherService : IWeatherService
 
     private async Task SaveWeatherForecastAsync(WeatherForecastDto dto)
     {
-        await weatherDomainService.SaveWeatherForecastAsync(dto.ToAggregate()).ConfigureAwait(false);
-        weatherCacheService.SaveForecast(dto);
+        await _weatherDomainService.SaveWeatherForecastAsync(dto.ToAggregate()).ConfigureAwait(false);
+        _weatherCacheService.SaveForecast(dto);
 
     }
 
     private WeatherForecastDto GetCachedForecast(string latitude, string longitude)
     {
         var cacheKey = new CacheKey(latitude, longitude);
-        var cached = weatherCacheService.GetForecastDto(cacheKey);
+        var cached = _weatherCacheService.GetForecastDto(cacheKey);
         return cached;
     }
 }
