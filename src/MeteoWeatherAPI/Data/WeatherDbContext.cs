@@ -1,7 +1,7 @@
 ﻿using MeteoWeatherAPI.Dto;
 using MongoDB.Driver;
 
-namespace DataAccess.Context;
+namespace MeteoWeatherAPI.Data;
 
 public class WeatherDbContext
 {

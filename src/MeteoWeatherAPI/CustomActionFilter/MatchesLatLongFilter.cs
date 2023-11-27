@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using MeteoWeatherAPI.CustomAttribute;
 using System.Text.RegularExpressions;
 
 namespace MeteoWeatherAPI.CustomActionFilter;

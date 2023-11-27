@@ -1,10 +1,10 @@
 using Application.Validators;
-using DataAccess.Context;
 using DataAccess.Services;
 using Domain.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MeteoWeatherAPI.CustomActionFilter;
+using MeteoWeatherAPI.Data;
 using MeteoWeatherAPI.Services;
 using MongoDB.Driver;
 

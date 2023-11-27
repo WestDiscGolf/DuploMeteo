@@ -1,5 +1,5 @@
 using Application.Dto;
-using MeteoWeatherAPI.CustomAttribute;
+using MeteoWeatherAPI.CustomActionFilter;
 using MeteoWeatherAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -10,7 +10,6 @@ namespace MeteoWeatherAPI.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-
     private readonly ILogger<WeatherForecastController> _logger;
     private readonly IWeatherService _weatherService;
 
