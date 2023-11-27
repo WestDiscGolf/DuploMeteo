@@ -5,7 +5,7 @@ using Domain.Keys;
 using Domain.Services;
 using Newtonsoft.Json;
 
-namespace Application.Service;
+namespace MeteoWeatherAPI.Services;
 
 public interface IWeatherService
 {
@@ -29,8 +29,8 @@ public class WeatherService : IWeatherService
     {
         var id = LatLongKey.Key(latitude, longitude);
         var toDelete = await weatherDomainService.GetWeatherForecastAsync(id).ConfigureAwait(false);
-            
-        if(toDelete == null)
+
+        if (toDelete == null)
             return;
 
         var cacheKey = new CacheKey(toDelete.Latitude, toDelete.Longitude);
@@ -66,8 +66,8 @@ public class WeatherService : IWeatherService
 
         var key = LatLongKey.Key(latitude, longitude);
         var result = await weatherDomainService.GetWeatherForecastAsync(key).ConfigureAwait(false);
-            
-        if(result == null)
+
+        if (result == null)
         {
             return null;
         }

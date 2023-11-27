@@ -1,9 +1,9 @@
 ﻿using Application.Cache;
 using Application.Dto;
-using Application.Service;
 using Domain;
 using Domain.Keys;
 using Domain.Services;
+using MeteoWeatherAPI.Services;
 using Moq;
 using Moq.AutoMock;
 

@@ -1,6 +1,6 @@
 using Application.Dto;
-using Application.Service;
 using MeteoWeatherAPI.CustomAttribute;
+using MeteoWeatherAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
