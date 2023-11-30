@@ -4,11 +4,11 @@ using MongoDB.Driver;
 
 namespace MeteoWeatherAPI.Services;
 
-public class WeatherDomainService : IWeatherDomainService
+public class WeatherDataService : IWeatherDataService
 {
     private readonly WeatherDbContext _dbContext;
 
-    public WeatherDomainService(WeatherDbContext dbContext)
+    public WeatherDataService(WeatherDbContext dbContext)
     {
         _dbContext = dbContext;
     }
@@ -31,7 +31,7 @@ public class WeatherDomainService : IWeatherDomainService
         return result;
     }
 
-    public async Task<WeatherForecast> GetWeatherForecastAsync(string id)
+    public async Task<WeatherForecast?> GetWeatherForecastAsync(string id)
     {
         var result = await _dbContext.WeatherForecastContext.Find(x => x.Id == id)
             .SingleOrDefaultAsync()

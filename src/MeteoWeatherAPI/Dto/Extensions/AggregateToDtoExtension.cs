@@ -1,10 +1,8 @@
-﻿using MeteoWeatherAPI.Dto;
-
-namespace Application.Dto.Extensions;
+﻿namespace MeteoWeatherAPI.Dto.Extensions;
 
 public static class AggregateToDtoExtension
 {
-    public static WeatherForecastDto ToDto(this WeatherForecast weatherForecast)
+    public static WeatherForecastDto? ToDto(this WeatherForecast weatherForecast)
     {
         return new WeatherForecastDto()
         {

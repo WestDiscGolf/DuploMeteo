@@ -3,37 +3,62 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace MeteoWeatherAPI.Services;
 
-public class WeatherCacheService : IWeatherCacheService
+public class WeatherCacheService : IWeatherService
 {
+    private readonly IWeatherService _weatherService;
     private readonly IMemoryCache _memoryCache;
 
-    public WeatherCacheService(IMemoryCache memoryCache)
+    public WeatherCacheService(IWeatherService weatherService, IMemoryCache memoryCache)
     {
+        _weatherService = weatherService;
         _memoryCache = memoryCache;
     }
-    public void DeleteForecast(CacheKey key)
-    {
-        var cacheKey = key.GetCacheKey();
 
-        if (_memoryCache.TryGetValue(cacheKey, out _))
-            _memoryCache.Remove(key.GetCacheKey());
+    public Task<WeatherForecastDto> SaveWeatherForecastAync(string latitude, string longitude)
+    {
+        // saving an item doesn't require caching.
+        return _weatherService.SaveWeatherForecastAync(latitude, longitude);
     }
 
-    public WeatherForecastDto GetForecastDto(CacheKey cacheKey)
+    public async Task<WeatherForecastDto?> GetWeatherForecastAsync(string latitude, string longitude)
     {
-        var key = cacheKey.GetCacheKey();
-
-        var result = _memoryCache.Get<WeatherForecastDto>(key);
-        return result;
-    }
-
-    public void SaveForecast(WeatherForecastDto dto)
-    {
-        var key = new CacheKey(dto.Latitude, dto.Longitude).GetCacheKey();
-        _memoryCache.Set(key, dto, new MemoryCacheEntryOptions()
+        // getting the value needs to check the cache and process accordingly
+        var cacheKey = new CacheKey(latitude, longitude).GetCacheKey();
+        if (_memoryCache.TryGetValue(cacheKey, out var cachedValue)
+            && cachedValue is WeatherForecastDto weatherForecast)
         {
-            //Reasonable cache for weather data
-            SlidingExpiration = TimeSpan.FromMinutes(30)
-        });
+            return weatherForecast;
+        }
+        
+        var latestWeatherForecast  = await _weatherService.GetWeatherForecastAsync(latitude, longitude);
+
+        if (latestWeatherForecast is not null)
+        {
+            _memoryCache.Set(cacheKey, latestWeatherForecast, new MemoryCacheEntryOptions()
+            {
+                SlidingExpiration = TimeSpan.FromMinutes(30)
+            });
+        }
+
+        return latestWeatherForecast;
+    }
+
+    public Task<IEnumerable<BasicLatLongDto>> GetPastHistoricLatitudesAndLongitudesAsync()
+    {
+        // probably doesn't need caching, every time something is saved/deleted this cache will also
+        // need manipulation. Worth it? The complexity of cache invalidating if something is in the cache
+        // probably isn't worth the pain.
+        return _weatherService.GetPastHistoricLatitudesAndLongitudesAsync();
+    }
+
+    public Task DeleteWeatherForecastAsync(string latitude, string longitude)
+    {
+        _weatherService.DeleteWeatherForecastAsync(latitude, longitude);
+
+        // time to invalidate the cache on the deleted item
+        var cacheKey = new CacheKey(latitude, longitude).GetCacheKey();
+        _memoryCache.Remove(cacheKey);
+
+        return Task.CompletedTask;
     }
 }

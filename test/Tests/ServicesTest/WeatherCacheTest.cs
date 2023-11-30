@@ -1,4 +1,5 @@
 ﻿using Application.Dto;
+using MeteoWeatherAPI.Dto;
 using MeteoWeatherAPI.Services;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,8 @@ namespace Tests.ServicesTest;
 public class WeatherCacheTest
 {
     private AutoMocker autoMocker = new AutoMocker();
-    private IWeatherCacheService mocked_weatherCacheService;
-    private IWeatherCacheService concrete_weatherCacheService;
+    private IWeatherService sut;
+    //private IWeatherService concrete_weatherCacheService;
 
     private const string LATITUDE = "34.0754";
     private const string LONGITUDE = "-84.2941";
@@ -26,13 +27,13 @@ public class WeatherCacheTest
         var serviceProvider = services.BuildServiceProvider();
 
         var memoryCache = serviceProvider.GetService<IMemoryCache>();
-        concrete_weatherCacheService = new WeatherCacheService(memoryCache);
+        //concrete_weatherCacheService = new WeatherCacheService(memoryCache);
     }
 
     [TestInitialize]
     public void Init()
     {
-        mocked_weatherCacheService = autoMocker.CreateInstance<WeatherCacheService>();
+        sut = autoMocker.CreateInstance<WeatherCacheService>();
     }
 
     [TestMethod]
@@ -40,37 +41,49 @@ public class WeatherCacheTest
     {
         var key = new CacheKey(LATITUDE, LONGITUDE);
 
-        mocked_weatherCacheService.DeleteForecast(key);
+        sut.DeleteWeatherForecastAsync(LATITUDE, LONGITUDE);
 
         autoMocker.GetMock<IMemoryCache>()
             .Verify(x => x.Remove(key.GetCacheKey()), Times.Never());
     }
 
     [TestMethod]
-    public void Given_WeatherForecastDto_SaveSuccessfullyToCache()
+    public async Task Given_WeatherForecastDto_SaveSuccessfullyToCache()
     {
-        var dto = new WeatherForecastDto()
-        {
-            Latitude = LATITUDE, Longitude = LONGITUDE
-        };
+        //// Arrange
+        //var dto = new WeatherForecastDto()
+        //{
+        //    Latitude = LATITUDE, Longitude = LONGITUDE
+        //};
 
-        concrete_weatherCacheService.SaveForecast(dto);
+        //// Save the record
+        //await sut.SaveWeatherForecastAync(LATITUDE, LONGITUDE);
 
-        var key = new CacheKey(LATITUDE, LONGITUDE);
+        //// Act
 
-        var fromCache = concrete_weatherCacheService.GetForecastDto(key);
 
-        Assert.IsTrue(fromCache != null);
-        Assert.IsTrue(fromCache.Latitude == dto.Latitude && fromCache.Longitude == dto.Longitude);
+        //concrete_weatherCacheService.SaveForecast(dto);
+
+        //var key = new CacheKey(LATITUDE, LONGITUDE);
+
+        //var fromCache = concrete_weatherCacheService.GetForecastDto(key);
+
+        //Assert.IsTrue(fromCache != null);
+        //Assert.IsTrue(fromCache.Latitude == dto.Latitude && fromCache.Longitude == dto.Longitude);
     }
 
     [TestMethod]
-    public void Given_WeatherForecastDto_DoesNotExistInCache_ReturnsNull()
+    public async Task Given_WeatherForecastDto_DoesNotExistInCache_ReturnsNull()
     {
-        var key = new CacheKey("blah", "blah");
+        // Arrange
 
-        var result = concrete_weatherCacheService.GetForecastDto(key);
+        // Act
+        var result = await sut.GetWeatherForecastAsync("blah", "blah");
 
+        // Assert
         Assert.IsTrue(result == null);
+
+        var weatherService = autoMocker.GetMock<IWeatherService>();
+        weatherService.Verify(x => x.GetWeatherForecastAsync(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
     }
 }

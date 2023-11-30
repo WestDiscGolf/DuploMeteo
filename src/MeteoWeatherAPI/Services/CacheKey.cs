@@ -15,7 +15,9 @@ public class CacheKey
         }
     }
 
-    public string GetCacheKey() => LatLongKey.Key(Latitude, Longitude);
     public string Latitude { get; private set; }
+
     public string Longitude { get; private set; }
+
+    public string GetCacheKey() => LatLongKey.Key(Latitude, Longitude);
 }

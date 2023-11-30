@@ -4,6 +4,7 @@ using MeteoWeatherAPI.CustomActionFilter;
 using MeteoWeatherAPI.Data;
 using MeteoWeatherAPI.Services;
 using MeteoWeatherAPI.Validators;
+using Microsoft.Extensions.Caching.Memory;
 using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,9 +20,9 @@ builder.Services.AddSingleton<IMongoClient>(s => new MongoClient(config.GetConne
 builder.Services.AddScoped(s => new WeatherDbContext(s.GetRequiredService<IMongoClient>()));
 
 builder.Services.AddMemoryCache();
-builder.Services.AddScoped<IWeatherDomainService, WeatherDomainService>();
-builder.Services.AddScoped<IWeatherService, WeatherService>();
-builder.Services.AddScoped<IWeatherCacheService, WeatherCacheService>();
+builder.Services.AddScoped<IWeatherDataService, WeatherDataService>();
+builder.Services.AddScoped<WeatherService>();
+builder.Services.AddScoped<IWeatherService, WeatherCacheService>(sp => new(sp.GetRequiredService<WeatherService>(), sp.GetRequiredService<IMemoryCache>()));
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<LatLongValidator>();
